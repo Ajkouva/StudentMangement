@@ -1,6 +1,6 @@
 # Student Management System
 
-A modern, responsive, and full-featured School Management System built with the **PERN Stack** (PostgreSQL/MySQL, Express, React, Node.js). This application provides distinct portals for **Teachers** and **Students** to manage attendance, profiles, and academic activities.
+A modern, responsive, and full-featured School Management System built with the **PERN Stack** (PostgreSQL, Express, React, Node.js). This application provides distinct portals for **Teachers** and **Students** to manage attendance, profiles, and academic activities.
 
 ## 🚀 Features
 
@@ -24,14 +24,14 @@ A modern, responsive, and full-featured School Management System built with the 
 
 - **Frontend**: React.js (Vite), Tailwind CSS, Lucide React (Icons), Axios.
 - **Backend**: Node.js, Express.js.
-- **Database**: MySQL (using `mysql2` driver).
+- **Database**: PostgreSQL (using `pg` driver).
 - **Authentication**: JWT (JSON Web Tokens) & Bcrypt for security.
 
 ## ⚙️ Installation & Setup
 
 ### Prerequisites
-- Node.js installed.
-- MySQL Server installed and running.
+- **Node.js** (v16 or higher) installed.
+- **PostgreSQL** (v12 or higher) installed and running.
 
 ### 1. Clone the Repository
 ```bash
@@ -47,17 +47,41 @@ npm install
 ```
 
 **Database Configuration**:
-1. Create a MySQL database (e.g., `school_db`).
-2. Configure the `.env` file in the `server` directory:
+1. **Create PostgreSQL database**:
+   ```bash
+   # Using psql (PostgreSQL command-line tool)
+   psql -U postgres
+   CREATE DATABASE school_db;
+   \q
+   ```
+   Or use **pgAdmin** GUI to create a database named `school_db`.
+
+2. **Configure environment variables**:
+   Create a `.env` file in the `server` directory:
    ```env
    PORT=5000
    DB_HOST=localhost
-   DB_USER=root
-   DB_PASS=your_password
+   DB_USER=postgres
+   DB_PASSWORD=your_password
    DB_NAME=school_db
-   JWT_SECRET=your_jwt_secret
+   DB_PORT=5432
+   JWT_SECRET=your_jwt_secret_here
    ```
-3. Run the database initialization (if scripts are provided) or allow the server to handle simple schema checks.
+   ⚠️ **Note**: Replace `your_password` with your actual PostgreSQL password!
+
+3. **Initialize the database schema**:
+   ```bash
+   node init-db.js
+   ```
+   This creates all necessary tables (users, students, teachers, attendance).
+
+4. **Create admin account**:
+   ```bash
+   node create-admin.js
+   ```
+   Default credentials:
+   - Email: `admin@school.com`
+   - Password: `admin`
 
 **Start the Server**:
 ```bash
@@ -96,9 +120,11 @@ Project/
 └── README.md
 ```
 
-## 🔒 Default Credentials (for testing)
-- **Teacher/Admin Login**: `admin@school.com` / `admin123`
-- **Student Login**: Use credentials created via the Teacher Portal.
+## 🔒 Default Credentials
+- **Teacher/Admin Login**: 
+  - Email: `admin@school.com`
+  - Password: `admin` (change this after first login!)
+- **Student Login**: Students must be created by a teacher through the Teacher Portal.
 
 ## 🎨 UI/UX Design
 The application features a dark-themed, premium aesthetic using:
